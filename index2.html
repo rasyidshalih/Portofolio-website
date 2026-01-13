@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="Portofolio">
+    <meta name="description"
+        content="Portofolio - Rasyid Shalih">
+    <meta name="author" content="Rasyid">
+    <meta property="og:image" content="">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <link rel="canonical" href="">
+    <link rel="icon" type="image/png" href="">
+    <link rel="shortcut icon" href="">
+
+    <title>Portofolio - Rasyid Shalih</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', "sans-serif"],
+                    },
+                    colors: {
+                        brand: {
+                            50:  "#ECFEFF", // hampir putih, background utama
+                            100: "#CFFAFE", // section / soft highlight
+                            200: "#A5F3FC", // hover background
+                            300: "#67E8F9", // border / subtle accent
+                            400: "#22D3EE", // icon / secondary CTA
+                            500: "#06B6D4", // PRIMARY (button utama)
+                            600: "#0891B2", // button hover / active
+                            700: "#0E7490", // heading kecil / badge
+                            800: "#155E75", // heading besar
+                            900: "#164E63", // text gelap / dark section
+                        },
+                        glass: {
+                            light: "rgba(255, 255, 255, 0.7)",
+                            border: "rgba(226, 232, 240, 0.6)",
+                        },
+                    },
+                    animation: {
+                        blob: "blob 10s infinite",
+                        float: "float 6s ease-in-out infinite",
+                        shimmer: "shimmer 2s linear infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                            "33%": {
+                                transform:
+                                    "translate(30px, -50px) scale(1.1)",
+                            },
+                            "66%": {
+                                transform:
+                                    "translate(-20px, 20px) scale(0.9)",
+                            },
+                            "100%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                        },
+                        float: {
+                            "0%, 100%": { transform: "translateY(0)" },
+                            "50%": { transform: "translateY(-10px)" },
+                        },
+                        shimmer: {
+                            "0%": { backgroundPosition: "200% 0" },
+                            "100%": { backgroundPosition: "-200% 0" },
+                        },
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        /* Base Settings */
+        body {
+            background-color: #f8fafc;
+            /* Slate 50 */
+            color: #0f172a;
+            /* Slate 900 */
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Mesh (Light Mode) */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: blob 20s infinite alternate;
+        }
+
+        .orb-1 {
+            top: -5%;
+            left: -5%;
+            width: 50vw;
+            height: 50vw;
+            background: #34d399;
+            animation-delay: 0s;
+            opacity: 0.2;
+        }
+
+        /* Green */
+        .orb-2 {
+            bottom: -5%;
+            right: -5%;
+            width: 50vw;
+            height: 50vw;
+            background: #2dd4bf;
+            animation-delay: -5s;
+            opacity: 0.2;
+        }
+
+        /* Teal */
+        .orb-3 {
+            top: 40%;
+            left: 40%;
+            width: 40vw;
+            height: 40vw;
+            background: #67E8F9;
+            animation-delay: -10s;
+            opacity: 0.3;
+        }
+
+        /* Lime */
+
+        /* Glassmorphism Card (Light Version) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card-accent {
+            background: linear-gradient(135deg,
+                    rgba(255, 255, 255, 0.9) 0%,
+                    rgba(236, 253, 245, 0.8) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 40px -10px rgba(16, 185, 129, 0.15);
+        }
+
+        /* 3D Tilt Effect Container */
+        .tilt-card {
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+
+        /* Scroll Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Shimmer Button Effect (Green) */
+        .btn-shimmer {
+            background: linear-gradient(110deg,
+                    #10b981 45%,
+                    #6ee7b7 50%,
+                    #10b981 55%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite linear;
+        }
+
+        /* Text Gradients */
+        .text-glow {
+            text-shadow: 0 0 30px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Grid Pattern Overlay */
+        .grid-bg {
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+        }
+
+        /* Custom Scrollbar for Tier Section */
+        .tier-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .tier-scroll::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .tier-scroll::-webkit-scrollbar-thumb {
+            background: rgba(16, 185, 129, 0.3);
+            border-radius: 10px;
+        }
+
+        .video-aspect {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+        }
+    </style>
+</head>
+
+<body class="antialiased selection:bg-brand-500 selection:text-white">
+    <!-- Living Background -->
+    <div class="ambient-bg">
+        <div class="grid-bg absolute inset-0"></div>
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <!-- Navbar -->
+<div class="fixed w-full z-50 top-0 pt-4 px-4">
+    <nav class="max-w-7xl mx-auto glass-card rounded-2xl transition-all duration-300" id="navbar">
+        <div class="px-4 sm:px-6">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <a href="/">
+                        <span class="font-bold text-lg text-slate-800 tracking-tight">Porto<span class="text-brand-600">folio</span>.</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-1 items-center">
+                    <!-- <a href="/#scp"
+                        class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all">Setra
+                        Capital Program</a>
+                    <a href="/#kurikulum"
+                        class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all">Belajar</a> -->
+
+                    <!-- Tools Dropdown (Modified) -->
+                    <!-- <div class="relative group">
+                        <button
+                            class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all flex items-center gap-1 cursor-default">
+                            Tools
+                            <i
+                                class="ph-bold ph-caret-down text-xs mt-0.5 text-slate-400 group-hover:text-brand-600 transition-colors"></i>
+                        </button>
+                        <div
+                            class="absolute top-full left-0 mt-2 w-48 p-1.5 glass-card bg-white/95 backdrop-blur-xl rounded-xl border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+                            <a href="terminal.html"
+                                class="flex items-center gap-2.5 px-3 py-2.5 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all group/item">
+                                <div
+                                    class="w-8 h-8 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center group-hover/item:bg-white group-hover/item:text-brand-600 group-hover/item:shadow-sm transition-all">
+                                    <i class="ph-fill ph-terminal-window text-lg"></i>
+                                </div>
+                                <span>Terminal</span>
+                            </a>
+                        </div>
+                    </div> -->
+
+                    <a href="#scp"
+                        class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all">Experience</a>
+                    <a href="#project"
+                        class="px-3 py-2 text-sm font-medium text-slate-600 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-all">Project</a>
+                    <div class="relative group ml-4">
+                        <button id="hireBtn"
+                            class="ml-4 px-6 py-2.5 rounded-xl text-sm font-bold text-white bg-slate-900 hover:bg-slate-800 shadow-lg shadow-slate-900/10 transition-all flex items-center gap-2 transform hover:-translate-y-0.5 disabled:opacity-60 disabled:cursor-not-allowed">
+                            Hire Me
+                            <i class="ph-bold ph-arrow-up-right"></i>
+                        </button>
+                        <div id="hireMenu"
+                            class="absolute top-14 right-0 hidden flex-col
+               bg-white rounded-2xl shadow-xl
+               divide-y divide-gray-200
+               overflow-hidden min-w-[180px]">
+
+                            <!-- WhatsApp -->
+                            <a href="https://wa.me/6282111586538" target="_blank"
+                            class="flex items-center gap-3 px-4 py-3 rounded-xl
+                                    hover:bg-emerald-50 transition">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-emerald-500 text-white
+                                        flex items-center justify-center">
+                                    <i class="ph-fill ph-whatsapp-logo"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800">WhatsApp</div>
+                                    <div class="text-xs text-slate-500">Chat langsung</div>
+                                </div>
+                            </a>
+
+                            <!-- Gmail -->
+                            <a href="mailto:muhammadrasyidshalih@gmail.com"
+                            class="flex items-center gap-3 px-4 py-3 rounded-xl
+                                    hover:bg-red-50 transition">
+                                <div
+                                    class="w-9 h-9 rounded-full bg-red-500 text-white
+                                        flex items-center justify-center">
+                                    <i class="ph-fill ph-envelope"></i>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-bold text-slate-800">Gmail</div>
+                                    <div class="text-xs text-slate-500">Email resmi</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div> 
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-800 p-2">
+                    <i class="ph ph-list text-2xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden border-t border-slate-100 bg-white/80 backdrop-blur-xl">
+            <div class="px-4 py-4 space-y-2">
+                <!-- <a href="#scp"
+                    class="block px-4 py-3 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">Setra
+                    Capital Program</a>
+                <a href="#kurikulum"
+                    class="block px-4 py-3 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">Belajar</a> -->
+
+                <!-- Mobile Tools Submenu -->
+                <!-- <div class="px-4 py-2">
+                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">
+                        Tools
+                    </div>
+                    <a href="terminal.html"
+                        class="flex items-center gap-3 p-2 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">
+                        <i class="ph-fill ph-terminal-window text-lg"></i>
+                        Terminal
+                    </a>
+                </div> -->
+
+                <!-- <a href="#"
+                    class="block px-4 py-3 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">Event</a> -->
+                <a href="#scp"
+                    class="block px-4 py-3 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">Experience</a>
+                <a href="#project"
+                    class="block px-4 py-3 rounded-lg text-slate-700 hover:bg-brand-50 hover:text-brand-600">Project</a>    
+
+                <a href="#" data-gate-date="2026-01-07T00:00:00+07:00">
+                    <button
+                        class="w-full mt-2 bg-brand-600 text-white px-4 py-3 rounded-lg font-bold shadow-lg shadow-brand-500/20 disabled:opacity-60 disabled:cursor-not-allowed">
+                        Hire Me
+                    </button>
+                </a>
+            </div>
+        </div>
+    </nav>
+</div>
+
+    
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center pt-32 pb-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-center items-center relative z-10">
+            <!-- Text Content -->
+            <div class="reveal active flex flex-col items-center">
+                <h1 class="text-5xl sm:text-7xl font-extrabold text-slate-900 tracking-tight mb-8 leading-[1.1]
+                           reveal active text-center flex flex-col items-center">
+                    Hello I'm, <br/>
+                    <span
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-cyan-500 to-teal-500 text-glow">
+                        Rasyid
+                    </span>
+                </h1>
+
+                <p class="text-lg text-slate-500 mb-10 leading-relaxed max-w-xl border-l-4">
+                    I'm <strong>Physicist and Aspiring Data Analyst and Data Management</strong>
+                </p>
+
+                
+                <div class="flex flex-col sm:flex-row gap-5">
+                    <a href="#about" class="w-full sm:w-auto"
+                        data-gate-date="2026-01-07T00:00:00+07:00">
+                        <button
+                            class="w-full sm:w-auto min-h-[56px] px-8 py-4 rounded-2xl font-bold
+                                   inline-flex items-center justify-center gap-3
+                                   transition-all transform hover:-translate-y-1 text-white
+                                   bg-gradient-to-r from-brand-600 via-emerald-500 to-teal-500
+                                   shadow-xl shadow-emerald-500/25 hover:shadow-2xl hover:shadow-emerald-500/35
+                                   focus:outline-none focus:ring-2 focus:ring-emerald-400/40 disabled:opacity-60 disabled:cursor-not-allowed">
+                            <i class="ph-bold ph-user text-lg"></i>
+                            About Me
+                        </button>
+                    </a>
+
+                    <a href="#" class="w-full sm:w-auto"
+                        data-gate-date="2026-01-07T00:00:00+07:00">
+                        <button
+                            class="w-full sm:w-auto min-h-[56px] px-8 py-4 rounded-2xl font-bold
+                                   inline-flex items-center justify-center gap-3
+                                   transition-all transform hover:-translate-y-1 text-slate-700
+                                   bg-white/70 border border-slate-200 shadow-sm
+                                   hover:bg-white hover:border-emerald-200 hover:shadow-md
+                                   focus:outline-none focus:ring-2 focus:ring-emerald-400/30 disabled:opacity-60 disabled:cursor-not-allowed">
+                            <span
+                                class="w-8 h-8 rounded-full bg-cyan-50 flex items-center justify-center
+                                       text-cyan-600 transition-transform group-hover:scale-110">
+                                <i class="ph-fill ph-user-circle-check text-xs"></i>
+                            </span>
+                            Hire Me
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Founder Profile (Placed Above Edukasi) -->
+    <section id="about" class="py-24 relative bg-white overflow-hidden">
+        <!-- Background Elements -->
+        <div
+            class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20">
+        </div>
+        <div class="absolute top-1/4 left-0 w-96 h-96 bg-emerald-100/50 rounded-full blur-3xl -z-10"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div
+                class="glass-card rounded-[3rem] p-8 md:p-12 border border-slate-100 bg-white/80 shadow-2xl reveal backdrop-blur-xl">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <!-- Image Side -->
+                    <div class="relative group order-2 lg:order-1">
+                        <div
+                            class="absolute -inset-4 bg-gradient-to-tr from-cyan-400 to-teal-500 rounded-[2.5rem] blur-lg opacity-30 group-hover:opacity-50 transition duration-500">
+                        </div>
+                        <div class="relative rounded-[2rem] overflow-hidden aspect-[4/5] shadow-lg">
+                            <img src="img/mephoto.jpg" alt="Rizki Aditama"
+                                class="object-cover w-full h-full transform transition duration-700 group-hover:scale-105" />
+                            <div
+                                class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-slate-900/90 to-transparent p-8">
+                                <h3 class="text-2xl font-bold text-white">
+                                    Muhammad Rasyid Shalih
+                                </h3>
+                                <p class="text-cyan-400 font-medium">
+                                    S1 Physics
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Side -->
+                    <div class="space-y-8 order-1 lg:order-2">
+                        <div>
+                            <span
+                                class="inline-block py-1 px-3 rounded-full bg-cyan-100 border border-cyan-200 text-cyan-700 font-bold text-xs tracking-wider uppercase mb-4">
+                                About Me
+                            </span>
+                            <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-6">
+                                Muhammad Rasyid Shalih <br />
+                                <span
+                                    class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-teal-500">
+                                    Physics Graduate.
+                                </span>
+                            </h2>
+                            <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                                Lulusan <strong class="text-slate-900">Fisika Universitas Gadjah Mada dengan minat kuat di bidang data.</strong>
+                                Berpengalaman dalam input dan pengolahan data ekperimen menggunakan berbagai 
+                                formula di <strong class="text-emerald-700">Excel</strong> serta <strong class="text-emerald-700">Python</strong> dengan library <strong class="text-emerald-700">Numpy dan Matplotlib</strong> untuk analisis data 
+                                lanjutan dan saat ini sedang mempelajari <strong class="text-emerald-700">SQL</strong> untuk mendukung kemampuan 
+                                pengolahan dan pengelolaan data dalam skala besar. Memiliki <strong class="text-slate-900">pola pikir analitis, detail, 
+                                dan motivasi kuat untuk terus mempelajari hal baru.</strong>
+                            </p>
+                            <p class="text-slate-600 text-lg leading-relaxed">
+                                Pengalaman yang ada didukung dengan aktivitas nyata yang telah dan masih dilakukan untuk terus
+                                berkembang sehingga tidak tertelan oleh zaman.
+                            </p>
+                        </div>
+
+                        <div class="flex flex-wrap gap-4">
+                            <a href="https://www.linkedin.com/in/mrasyidshalih/" target="_blank"
+                                class="flex items-center gap-2 px-5 py-3 rounded-xl bg-blue-50 text-blue-600 font-bold hover:bg-blue-100 transition-colors border border-blue-100">
+                                <i class="ph-fill ph-linkedin-logo text-xl"></i>
+                                Linkedin
+                            </a>
+                            <a href="https://www.instagram.com/mdrshd02/" target="_blank"
+                                class="flex items-center gap-2 px-5 py-3 rounded-xl bg-pink-50 text-pink-600 font-bold hover:bg-pink-100 transition-colors border border-pink-100">
+                                <i class="ph-fill ph-instagram-logo text-xl"></i>
+                                Instagram
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW PROCESS SECTION (Replaces old 'Simple Process') -->
+    <section id="scp" class="py-24 relative bg-white overflow-hidden">
+        <!-- ... existing content of SCP Process ... -->
+        <div
+            class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-50/50 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">
+                    Experience
+                </h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto">
+                    Pengalaman yang sudah saya lakukan selama masa kuliah sampai saat ini.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-1 gap-8">
+                <!-- ... existing content of Steps 1, 2, 3 ... -->
+                <!-- Tahap 1 -->
+                <div
+                    class="glass-card p-8 rounded-3xl border border-slate-100 bg-white hover:shadow-lg transition-all duration-300 reveal group relative overflow-hidden">
+                    <div class="flex flex-col lg:flex-row gap-10 items-start">
+                        <div class="lg:w-1/3">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center text-slate-600 font-bold text-xl group-hover:bg-slate-900 group-hover:text-white transition-colors">
+                                    1
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                        PT Kintaka Data Prima ~ Dokter Arsip
+                                    </div>
+                                    <h3 class="text-2xl font-extrabold text-slate-900">
+                                        Project Staff
+                                    </h3>
+                                </div>
+                            </div>
+                            <p class="space-y-4">
+                                <p class="text-slate-500 text-sm mb-1">
+                                    Kementrian Pertanian, Ragunan, Jakarta Selatan
+                                </p>
+                                <p class="text-slate-500 text-sm">
+                                    Periode: <strong>Mei - Juli 2025</strong>
+                                </p>
+                            </p>
+                        </div>
+                        
+                        <div class="hidden lg:block w-px bg-slate-200 self-stretch mx-4"></div>
+
+                        <div class="flex-1 w-full grid md:grid-cols-1 gap-6">
+                            <div class="bg-white/60 p-6 rounded-2xl">
+                                <div class="space-y-2">
+                                    <div class="text-sm text-slate-700 font-medium">
+                                        <ul class="list-disc pl-5">
+                                            <li class="mb-2">
+                                                Melakukan digitalisasi 500+ dokumen arsip dengan Excel dan 
+                                                web-platform database SRIKANDI (Sistem Informasi Kearsipan Dinamis Terintegrasi) 
+                                                agar mempermudah pengelolaan dan akses, mempercepat 
+                                                pencarian, serta mengurangi risiko kehilangan.
+                                            </li>
+                                            <li>
+                                                Bertanggung jawab mengelola, menyimpan, dan memastikan seluruh dokumen 
+                                                masuk dan keluar tersusun rapi, aman, serta mudah ditemukan saat dibutuhkan. 
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tahap 2 -->
+                <div
+                    class="glass-card p-8 rounded-3xl border border-purple-100 bg-white hover:shadow-lg transition-all duration-300 reveal group">
+                    <div class="flex flex-col lg:flex-row gap-10 items-start">
+                        <div class="lg:w-1/3">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div
+                                    class="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600 font-bold text-xl group-hover:bg-purple-600 group-hover:text-white transition-colors">
+                                    2
+                                </div>
+                                <div>
+                                    <div class="text-xs font-bold text-purple-400 uppercase tracking-wide">
+                                        PT Instrument Control System (ICS)
+                                    </div>
+                                    <h3 class="text-xl font-bold text-slate-900">
+                                        Automation & PLC Trainee
+                                    </h3>
+                                </div>
+                            </div>
+                            <p class="space-y-4">
+                                <p class="text-slate-500 text-sm mb-1">
+                                    Fakultas MIPA UGM, Sleman, Yogyakarta
+                                </p>
+                                <p class="text-purple-500 text-sm">
+                                    Periode: <strong>Agustus - Desember 2025</strong>
+                                </p>
+                            </p>
+                        </div>
+
+                        <div class="hidden lg:block w-px bg-slate-200 self-stretch mx-4"></div>
+
+                        <div class="flex-1 w-full grid md:grid-cols-1 gap-6">
+                            <div class="bg-white/60 p-6 rounded-2xl">
+                                <div class="space-y-2">
+                                    <div class="text-sm text-slate-700 font-medium">
+                                        <ul class="list-disc pl-5">
+                                            <li class="mb-2">
+                                                Mengembangkan sistem otomasi berbasis PLC untuk monitoring suhu dan kelembapan udara di ruangan 
+                                                sehingga pemantauan yang sebelumnya dilakukan manual, dapat dilakukan secara otomatis dan real-time. 
+                                            </li>
+                                            <li class="mb-2">
+                                                Mengintegrasikan output data PLC dengan aplikasi yang sudah dibuat menggunakan Visual Studio Code 
+                                                sehingga informasi suhu dan kelembapan dapat ditampilkan secara visual, rapi, dan mudah dipahami. 
+                                            </li>
+                                            <li>
+                                                Mengembangkan sistem monitoring berbasis web dengan mengintegrasikan output aplikasi Visual Studio 
+                                                Code dengan PHP dan Javascript sehingga pemantauan dapat dilakukan secara fleksibel tanpa batasan lokasi 
+                                                dan waktu.
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: Payout & Evaluasi Rules -->
+    <section id="project" class="py-24 relative bg-slate-50 border-y border-slate-200/50 overflow-hidden">
+        <div class="absolute inset-0 grid-bg opacity-50"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-5xl font-extrabold text-slate-900 mb-6 leading-tight tracking-tight">
+                    Project
+                </h2>
+                <p class="text-slate-500 text-lg leading-relaxed max-w-3xl mx-auto">
+                    Hal-hal yang sudah saya buat dengan perencaan dan hasilnya bermanfaat bagi masyakarat maupun industri.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-1 gap-8 mb-12">
+                <!-- TIER 1 -->
+                <div
+                    class="glass-card rounded-[2.5rem] p-8 md:p-10 bg-white/70 border border-white/70 shadow-lg hover:shadow-xl transition-all duration-300 reveal">
+                    <!-- Image Side -->
+                    <div class="flex items-center gap-5 mb-8">
+                        <div
+                            class="absolute -inset-4 rounded-[2.5rem] blur-lg opacity-30 group-hover:opacity-50 transition duration-500">
+                        </div>
+                        <div class="relative rounded-[2rem] overflow-hidden aspect-[16/9] shadow-lg">
+                            <div id="slider" class="flex transition-transform duration-700">
+                                <img src="img/ics1.jpg" class="w-full h-full object-cover flex-shrink-0" />
+                                <img src="img/ics2.jpg" class="w-full h-full object-cover flex-shrink-0" />
+                                <img src="img/ics3.jpg" class="w-full h-full object-cover flex-shrink-0" />
+                                <img src="img/ics4.jpg" class="w-full h-full object-cover flex-shrink-0" />
+                                <img src="img/ics5.jpg" class="w-full h-full object-cover flex-shrink-0" />
+                            </div>
+                            <div id="dots" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                                <!-- dots akan di-generate JS -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-5 mb-8">
+                        <div>
+                            <div class="text-xs font-bold text-cyan-600 uppercase tracking-wider mb-1">PT Instrument Control System (ICS)</div>
+                            <h3 class="text-2xl font-extrabold text-slate-900">
+                                Pembuatan Sistem Pengukuran Suhu dan Kelembapan Secara Otomatis Berbasis <br/><strong class="text-emerald-600">PLC dan Visual Studio Code</strong>
+                            </h3>
+                        </div>
+                    </div>
+
+                    <!-- Deskripsi Project -->
+                    <!-- <div class="space-y-6">
+                        <div class="bg-white/60 p-6 rounded-2xl border border-slate-100">
+                            <h4
+                                class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
+                                <i class="ph-bold ph-chart-line-up text-emerald-500"></i> Syarat Profit
+                            </h4>
+                            <ul class="space-y-4 text-sm text-slate-600">
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-x-circle text-slate-400 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>&lt; 5% (Gugur):</strong> Profit tidak cair. Tunggu <strong>3 bulan</strong>
+                                        untuk evaluasi ulang (Tanpa Quiz).
+                                    </span>
+                                </li>
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-arrow-circle-right text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>5% - 10% (Lanjut):</strong> Lanjut bulan depan. Jika bulan depan tetap
+                                        &lt; 10%, maka gugur (Tunggu 3 bulan).
+                                    </span>
+                                </li>
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-money text-emerald-600 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>Payout 70%:</strong> Cair jika profit nominal &ge; $20.
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-50/80 p-6 rounded-2xl border border-slate-100">
+                            <h4
+                                class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+                                <i class="ph-bold ph-shield-warning text-slate-400"></i> Aturan Risiko
+                            </h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-2">
+                                Pelanggaran Max DD, Daily DD, Risk Per Trade, atau Overlot.
+                            </p>
+                            <div
+                                class="flex items-center gap-2 text-xs font-bold text-red-600 bg-red-50 px-3 py-2 rounded-lg border border-red-100 w-fit">
+                                <i class="ph-bold ph-clock"></i> Penalti Waktu: 6 Bulan
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+
+                <!-- TIER 2 -->
+                <!-- <div
+                    class="glass-card rounded-[2.5rem] p-8 md:p-10 bg-white/70 border border-white/70 shadow-lg hover:shadow-xl transition-all duration-300 reveal">
+                    <div class="flex items-center gap-5 mb-8">
+                        <div
+                            class="w-14 h-14 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 shadow-sm">
+                            <i class="ph-fill ph-diamond text-2xl"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs font-bold text-emerald-600 uppercase tracking-wider mb-1">Intermediate</div>
+                            <h3 class="text-2xl font-extrabold text-slate-900">TIER 2 ($500)</h3>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="bg-white/60 p-6 rounded-2xl border border-slate-100">
+                            <h4
+                                class="font-bold text-slate-800 mb-4 flex items-center gap-2 text-sm uppercase tracking-wide">
+                                <i class="ph-bold ph-chart-line-up text-emerald-500"></i> Syarat Profit
+                            </h4>
+                            <ul class="space-y-4 text-sm text-slate-600">
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-x-circle text-slate-400 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>&lt; 5% (Gugur):</strong> Profit tidak cair. Tunggu <strong>3 bulan</strong>
+                                        untuk evaluasi ulang (Tanpa Quiz).
+                                    </span>
+                                </li>
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-arrow-circle-right text-emerald-500 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>5% - 10% (Lanjut):</strong> Lanjut bulan depan. Jika bulan depan tetap
+                                        &lt; 10%, maka gugur (Tunggu 3 bulan).
+                                    </span>
+                                </li>
+                                <li class="flex gap-4 items-start">
+                                    <i class="ph-fill ph-money text-emerald-600 mt-0.5 flex-shrink-0"></i>
+                                    <span>
+                                        <strong>Payout 70%:</strong> Cair jika profit nominal &ge; $50.
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="bg-slate-50/80 p-6 rounded-2xl border border-slate-100">
+                            <h4
+                                class="font-bold text-slate-800 mb-3 flex items-center gap-2 text-sm uppercase tracking-wide">
+                                <i class="ph-bold ph-shield-warning text-slate-400"></i> Aturan Risiko
+                            </h4>
+                            <p class="text-sm text-slate-500 leading-relaxed mb-2">
+                                Pelanggaran Max DD, Daily DD, Risk Per Trade, atau Overlot.
+                            </p>
+                            <div
+                                class="flex items-center gap-2 text-xs font-bold text-red-600 bg-red-50 px-3 py-2 rounded-lg border border-red-100 w-fit">
+                                <i class="ph-bold ph-clock"></i> Penalti Waktu: 6 Bulan
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW BENEFITS SECTION (Added based on request) -->
+    <section id="benefits" class="py-24 bg-slate-50 relative border-y border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4">
+                    Becoming<br />
+                    <span class="text-brand-600">Update</span>
+                </h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">
+                    Website masih dalam tahap pembangunan<br/>
+                    dan untuk sementara hanya menampilkan hal yang memang diperlukan.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-200 relative z-10 bg-white/80 backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-slate-800">Porto<span class="font-bold text-cyan-600">folio</span>.</span>
+                </div>
+                <div class="flex gap-6 text-sm font-medium text-slate-500">
+                    <a href="#about" class="hover:text-brand-600 transition-colors">About Me</a>
+                    <!-- <a href="https://sekolahtrading.id/terms" class="hover:text-brand-600 transition-colors">Terms & Conditions</a>
+                    <a href="https://sekolahtrading.id/risk-disclosure" class="hover:text-brand-600 transition-colors">Risk Disclosure</a> -->
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <p class="text-slate-400 text-xs leading-relaxed max-w-2xl">
+                        Website ini dibangun supaya memudahkan saya dan mungkin orang-orang
+                        untuk bisa mengenal saya lebih dalam.<br/>
+                        Dan aktivitas yang saya lakukan untuk kedepannya akan saya update di website ini.
+                    </p>
+                    <p class="text-slate-400 text-xs whitespace-nowrap">
+                        © 2026. Built for Me 💖.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // 1. 3D Tilt Effect for Hero Card
+        const card = document.querySelector(".tilt-card");
+        const container = document.querySelector("#hero-card-container");
+
+        if (container && card) {
+            container.addEventListener("mousemove", (e) => {
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+
+            container.addEventListener("mouseenter", () => {
+                card.style.transition = "none";
+            });
+
+            container.addEventListener("mouseleave", () => {
+                card.style.transition = "transform 0.5s ease";
+                card.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+        }
+
+        // 2. Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1,
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll(".reveal").forEach((el) => {
+            observer.observe(el);
+        });
+
+        // 3. Accordion Logic
+        function toggleAccordion(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector(".icon-rotate");
+
+            if (content.classList.contains("hidden")) {
+                content.classList.remove("hidden");
+                icon.style.transform = "rotate(180deg)";
+            } else {
+                content.classList.add("hidden");
+                icon.style.transform = "rotate(0deg)";
+            }
+        }
+
+        // 4. Mobile Menu
+        const btn = document.getElementById("mobile-menu-btn");
+        const menu = document.getElementById("mobile-menu");
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+
+        // 5. AI Logic
+        const apiKey = ""; // API Key injected by environment
+        const aiResponseContainer = document.getElementById(
+            "ai-response-container"
+        );
+        const aiInput = document.getElementById("ai-input");
+        const aiBtn = document.getElementById("ai-btn");
+
+        function fillInput(text) {
+            if (aiInput) {
+                aiInput.value = text;
+                aiInput.focus();
+            }
+        }
+
+        async function askAI() {
+            if (!aiInput) return;
+            const question = aiInput.value.trim();
+            if (!question) return;
+
+            addMessage(question, "user");
+            aiInput.value = "";
+            aiInput.disabled = true;
+            if (aiBtn) aiBtn.disabled = true;
+
+            const loadingId = addLoading();
+
+            try {
+                const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const payload = {
+                    contents: [
+                        {
+                            parts: [
+                                {
+                                    text: `Anda adalah mentor trading profesional dan ramah dari SekolahTrading.ID. Jawab pertanyaan berikut dalam Bahasa Indonesia yang mudah dipahami pemula, hindari jargon yang terlalu rumit tanpa penjelasan. Pertanyaan: ${question}`,
+                                },
+                            ],
+                        },
+                    ],
+                };
+
+                let responseText =
+                    "Maaf, terjadi kesalahan. Coba lagi nanti.";
+                let retries = 0;
+                const maxRetries = 3;
+
+                while (retries <= maxRetries) {
+                    try {
+                        const response = await fetch(url, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify(payload),
+                        });
+                        if (!response.ok) throw new Error("API Error");
+                        const data = await response.json();
+                        responseText =
+                            data.candidates?.[0]?.content?.parts?.[0]
+                                ?.text || responseText;
+                        break;
+                    } catch (e) {
+                        retries++;
+                        await new Promise((r) =>
+                            setTimeout(r, 1000 * Math.pow(2, retries))
+                        );
+                    }
+                }
+
+                removeLoading(loadingId);
+                addMessage(formatText(responseText), "ai");
+            } catch (error) {
+                removeLoading(loadingId);
+                addMessage("Maaf, koneksi ke server AI terganggu.", "ai");
+            } finally {
+                aiInput.disabled = false;
+                if (aiBtn) aiBtn.disabled = false;
+                aiInput.focus();
+            }
+        }
+
+        function addMessage(text, sender) {
+            if (!aiResponseContainer) return;
+            const div = document.createElement("div");
+            const isUser = sender === "user";
+
+            div.className = `flex gap-4 items-start ${isUser ? "flex-row-reverse" : ""
+                } animate-float`;
+
+            const avatar = isUser
+                ? `<div class="w-10 h-10 rounded-full bg-slate-200 flex-shrink-0 flex items-center justify-center text-slate-500"><i class="ph-fill ph-user text-xl"></i></div>`
+                : `<div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-teal-600 flex-shrink-0 flex items-center justify-center text-white shadow-lg"><i class="ph-fill ph-robot text-xl"></i></div>`;
+
+            const bubble = `<div class="${isUser
+                ? "bg-brand-600 text-white"
+                : "bg-white border border-slate-100 text-slate-600"
+                } p-4 rounded-2xl ${isUser ? "rounded-tr-none" : "rounded-tl-none"
+                } shadow-sm text-sm leading-relaxed ai-content">${text}</div>`;
+
+            div.innerHTML = avatar + bubble;
+            aiResponseContainer.appendChild(div);
+            aiResponseContainer.scrollTop =
+                aiResponseContainer.scrollHeight;
+        }
+
+        function addLoading() {
+            if (!aiResponseContainer) return;
+            const id = "loading-" + Date.now();
+            const div = document.createElement("div");
+            div.id = id;
+            div.className = "flex gap-4 items-start";
+            div.innerHTML = `
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-brand-500 to-teal-600 flex-shrink-0 flex items-center justify-center text-white shadow-lg"><i class="ph-fill ph-robot text-xl"></i></div>
+                <div class="bg-white p-4 rounded-2xl rounded-tl-none shadow-sm border border-slate-100 flex items-center gap-2">
+                    <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                    <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+                </div>`;
+            aiResponseContainer.appendChild(div);
+            aiResponseContainer.scrollTop =
+                aiResponseContainer.scrollHeight;
+            return id;
+        }
+
+        function removeLoading(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function formatText(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\n/g, "<br>");
+        }
+
+        // 6. Gate buttons/links by date across pages
+        function updateGatedLinks(globalGateDate) {
+            const links = document.querySelectorAll("[data-gate-date]");
+            links.forEach((link) => {
+                const gateValue = globalGateDate || link.dataset.gateDate;
+                const targetDate = new Date(gateValue);
+                const button = link.querySelector("button");
+
+                if (Number.isNaN(targetDate.getTime())) {
+                    link.classList.add("pointer-events-none", "opacity-60");
+                    link.setAttribute("aria-disabled", "true");
+                    if (button) {
+                        button.disabled = true;
+                    }
+                    return;
+                }
+
+                const isOpen = new Date() >= targetDate;
+                link.classList.toggle("pointer-events-none", !isOpen);
+                link.classList.toggle("opacity-60", !isOpen);
+                link.toggleAttribute("aria-disabled", !isOpen);
+                if (link.tagName === "A") {
+                    if (!isOpen) {
+                        if (!link.dataset.gateHref) {
+                            link.dataset.gateHref = link.getAttribute("href") || "";
+                        }
+                        link.removeAttribute("href");
+                        link.setAttribute("tabindex", "-1");
+                    } else if (link.dataset.gateHref) {
+                        link.setAttribute("href", link.dataset.gateHref);
+                        link.removeAttribute("tabindex");
+                    }
+                }
+                if (button) {
+                    button.disabled = !isOpen;
+                }
+            });
+        }
+
+        window.updateGatedLinks = updateGatedLinks;
+        updateGatedLinks();
+        setInterval(updateGatedLinks, 1000);
+
+        // 7. Generate Scattered Trading Particles
+        const particlesContainer =
+            document.getElementById("trading-particles");
+        if (particlesContainer) {
+            const particleCount = 20;
+            const symbols = [
+                "ph-trend-up",
+                "ph-trend-down",
+                "ph-currency-dollar",
+                "ph-chart-bar",
+                "ph-coins",
+                "ph-chart-line-up",
+                "ph-chart-pie-slice",
+            ];
+            const colors = [
+                "text-emerald-400",
+                "text-emerald-500",
+                "text-teal-400",
+                "text-brand-400",
+            ];
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement("div");
+                const symbol =
+                    symbols[Math.floor(Math.random() * symbols.length)];
+                const color =
+                    colors[Math.floor(Math.random() * colors.length)];
+
+                const size = Math.floor(Math.random() * 20) + 15;
+                const left = Math.floor(Math.random() * 100);
+                const top = Math.floor(Math.random() * 100);
+                const duration = Math.floor(Math.random() * 10) + 10;
+                const delay = Math.floor(Math.random() * 5);
+
+                particle.className = `absolute ${color} opacity-20 animate-float-particle`;
+                particle.style.fontSize = `${size}px`;
+                particle.style.left = `${left}%`;
+                particle.style.top = `${top}%`;
+                particle.style.animationDuration = `${duration}s`;
+                particle.style.animationDelay = `${delay}s`;
+
+                particle.innerHTML = `<i class="ph-fill ${symbol}"></i>`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+    </script>
+
+    <!-- Hire Me Btn -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const btn = document.getElementById("hireBtn");
+            const menu = document.getElementById("hireMenu");
+
+            if (!btn || !menu) return; // anti error
+
+            btn.addEventListener("click", () => {
+                menu.classList.toggle("hidden");
+                menu.classList.toggle("flex");
+            });
+
+            document.addEventListener("click", (e) => {
+                if (!btn.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.add("hidden");
+                    menu.classList.remove("flex");
+                }
+            });
+        });
+    </script>
+
+    <!-- Swiper -->
+    <script>
+        const slider = document.getElementById("slider");
+        const dotsContainer = document.getElementById("dots");
+        const total = slider.children.length;
+
+        let index = 0;
+        let interval;
+
+        function goToSlide(i) {
+            index = i;
+            slider.style.transform = `translateX(-${index * 100}%)`;
+            updateDots();
+            resetAutoSlide();
+        }
+
+        function updateDots() {
+            document.querySelectorAll(".dot").forEach((dot, i) => {
+                dot.classList.toggle("bg-white", i === index);
+                dot.classList.toggle("bg-white/50", i !== index);
+            });
+        }
+
+        function createDots() {
+            for (let i = 0; i < total; i++) {
+                const dot = document.createElement("button");
+                dot.className = "dot w-2 h-2 rounded-full bg-white/50 transition";
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+
+        function startAutoSlide() {
+            interval = setInterval(() => {
+                index = (index + 1) % total;
+                slider.style.transform = `translateX(-${index * 100}%)`;
+                updateDots();
+            }, 3000);
+        }
+
+        function resetAutoSlide() {
+            clearInterval(interval);
+            startAutoSlide();
+        }
+
+        // INIT
+        createDots();
+        updateDots();
+        startAutoSlide();
+    </script>
+
+</body>
+
+</html>
